@@ -1,0 +1,22 @@
+<Application x:Class="WinLinScp.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:views="clr-namespace:WinLinScp.Views">
+    <Application.Resources>
+        <!-- 全局样式：一致的中文字体与间距 -->
+        <FontFamily x:Key="UiFont">Segoe UI</FontFamily>
+        <FontFamily x:Key="MonoFont">Consolas</FontFamily>
+
+        <!-- 常用转换器 -->
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+        <views:InverseBooleanConverter x:Key="InverseBool"/>
+        <views:BooleanToBrushConverter x:Key="BoolToBrush"/>
+        <views:DoubleToGridLengthConverter x:Key="DblToLen"/>
+        <views:EnumToBoolConverter x:Key="EnumToBool"/>
+
+        <Style TargetType="Window">
+            <Setter Property="FontFamily" Value="{StaticResource UiFont}" />
+            <Setter Property="FontSize" Value="13" />
+        </Style>
+    </Application.Resources>
+</Application>

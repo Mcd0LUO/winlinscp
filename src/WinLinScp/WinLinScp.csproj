@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>WinLinScp</RootNamespace>
+    <AssemblyName>WinLinScp</AssemblyName>
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\WinLinScp.ico</ApplicationIcon>
+    <!-- 关闭不变全球化，便于本地化中文文本 -->
+    <InvariantGlobalization>false</InvariantGlobalization>
+    <AssemblyTitle>WinLinScp</AssemblyTitle>
+    <Product>WinLinScp</Product>
+    <Version>0.6.1</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\WinLinScp.ico"/>
+    <Resource Include="Assets\WinLinScp.png"/>
+  </ItemGroup>
+
+</Project>

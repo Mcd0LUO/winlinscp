@@ -1,0 +1,6 @@
+# 统一行尾：文本文件按平台转换，避免 CRLF/LF 混乱
+* text=auto
+
+# 脚本保持 LF
+*.cmd text eol=crlf
+*.ps1 text eol=crlf

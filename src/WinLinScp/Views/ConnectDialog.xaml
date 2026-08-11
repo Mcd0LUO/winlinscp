@@ -1,0 +1,139 @@
+<Window x:Class="WinLinScp.Views.ConnectDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="连接" Height="700" Width="560"
+        WindowStartupLocation="CenterOwner">
+    <Grid Margin="14">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- 配置 -->
+        <Grid Grid.Row="0" Margin="0,0,0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="配置：" VerticalAlignment="Center" Margin="0,0,6,0"/>
+            <ComboBox x:Name="ProfileCombo" Grid.Column="1" Height="28"
+                      ItemsSource="{Binding ProfileNames}"/>
+        </Grid>
+
+        <Grid Grid.Row="1" Margin="0,0,0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="名称：" VerticalAlignment="Center" Margin="0,0,6,0"/>
+            <TextBox Grid.Column="1" Height="28" VerticalContentAlignment="Center" Text="{Binding ProfileName}"/>
+            <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="8,0,0,0">
+                <Button Content="保存" Width="56" Margin="0,0,6,0" Command="{Binding SaveProfileCommand}"/>
+                <Button Content="删除" Width="56" Command="{Binding DeleteProfileCommand}"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- 连接方式：二选一，只显示对应字段 -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,8">
+            <TextBlock Text="连接方式：" VerticalAlignment="Center" Margin="0,0,8,0" FontWeight="SemiBold"/>
+            <RadioButton Content="登录脚本" IsChecked="{Binding Method, Converter={StaticResource EnumToBool}, ConverterParameter=Script}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+            <RadioButton Content="IP + 密码" IsChecked="{Binding Method, Converter={StaticResource EnumToBool}, ConverterParameter=Password}" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <Grid Grid.Row="3" Margin="0,0,0,8" Visibility="{Binding IsScriptMethod, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="登录脚本：" VerticalAlignment="Center" Margin="0,0,6,0"/>
+            <TextBox Grid.Column="1" Height="28" VerticalContentAlignment="Center"
+                     Text="{Binding ScriptPath, UpdateSourceTrigger=LostFocus}"/>
+            <Button Grid.Column="2" Content="浏览…" Width="60" Margin="8,0,0,0" Command="{Binding BrowseScriptCommand}"/>
+        </Grid>
+
+        <!-- IP+密码：直接连接（user@host） -->
+        <Grid Grid.Row="4" Margin="0,0,0,8" Visibility="{Binding IsPasswordMethod, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="IP/主机：" VerticalAlignment="Center" Margin="0,0,6,0"/>
+            <TextBox Grid.Column="1" Height="28" VerticalContentAlignment="Center"
+                     Text="{Binding Host, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock Grid.Column="2" Text="用户名：" VerticalAlignment="Center" Margin="10,0,6,0"/>
+            <TextBox Grid.Column="3" Height="28" VerticalContentAlignment="Center"
+                     Text="{Binding User, UpdateSourceTrigger=PropertyChanged}"/>
+        </Grid>
+
+        <Grid Grid.Row="5" Margin="0,0,0,8" Visibility="{Binding IsPasswordMethod, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="密码：" VerticalAlignment="Center" Margin="0,0,6,0"/>
+            <PasswordBox x:Name="PasswordBox" Grid.Column="1" Height="28" VerticalContentAlignment="Center"/>
+        </Grid>
+
+        <Grid Grid.Row="6" Margin="0,0,0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="工作目录：" VerticalAlignment="Center" Margin="0,0,6,0"/>
+            <TextBox Grid.Column="1" Height="28" VerticalContentAlignment="Center" Text="{Binding WorkDir}"/>
+        </Grid>
+
+        <StackPanel Grid.Row="7" Orientation="Horizontal" Margin="0,0,0,8">
+            <Button Content="连接" Width="90" Command="{Binding ConnectCommand}"
+                    IsEnabled="{Binding IsConnecting, Converter={StaticResource InverseBool}}"/>
+            <CheckBox Content="下次启动自动连接" VerticalAlignment="Center" Margin="10,0,0,0"
+                      IsChecked="{Binding AutoConnect}"/>
+            <TextBlock Text="{Binding StatusText}" VerticalAlignment="Center" Margin="10,0,0,0"
+                       Foreground="{Binding IsConnected, Converter={StaticResource BoolToBrush}}"
+                       TextTrimming="CharacterEllipsis"/>
+        </StackPanel>
+
+        <!-- 登录日志 -->
+        <GroupBox Grid.Row="8" Header="登录日志" Margin="0,0,0,8" Padding="4">
+            <ListBox Height="150" ItemsSource="{Binding LogLines}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Text}" FontFamily="Consolas" TextWrapping="Wrap" Foreground="#1F1F1F">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsError}" Value="True">
+                                            <Setter Property="Foreground" Value="#C42B1C"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </GroupBox>
+
+        <TextBlock Grid.Row="9" Text="提示：按上方连接方式选择一种填写：登录脚本（自动提取目标/工作目录）、或 IP/主机 + 用户名 + 密码（经系统 ssh 的 SSH_ASKPASS 免交互认证）。"
+                   Foreground="Gray" FontSize="11" TextWrapping="Wrap" Margin="0,0,0,8"/>
+
+        <StackPanel Grid.Row="10" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="OkButton" Content="确定并连接" Width="96" Margin="0,0,8,0" IsDefault="True"
+                    IsEnabled="{Binding IsConnected}" Click="OkButton_Click"/>
+            <Button Content="取消" Width="72" IsCancel="True"/>
+        </StackPanel>
+    </Grid>
+</Window>

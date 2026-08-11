@@ -1,0 +1,18 @@
+<Window x:Class="WinLinScp.Views.CompressionLevelDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="压缩等级" SizeToContent="WidthAndHeight" Width="380"
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
+        ResizeMode="NoResize">
+    <StackPanel Margin="14">
+        <TextBlock Text="选择 zip 压缩等级：" FontWeight="SemiBold" Margin="0,0,0,8"/>
+        <RadioButton x:Name="RdoOptimal" Content="标准（Optimal）—— 速度与体积均衡" IsChecked="True" Margin="0,3"/>
+        <RadioButton x:Name="RdoFastest" Content="最快（Fastest）—— 压缩快、体积略大" Margin="0,3"/>
+        <RadioButton x:Name="RdoSmallest" Content="最小体积（SmallestSize）—— 最慢、最省空间" Margin="0,3"/>
+        <RadioButton x:Name="RdoNone" Content="不压缩（NoCompression）—— 仅打包" Margin="0,3"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+            <Button Content="确定" Width="72" Margin="0,0,8,0" IsDefault="True" Click="Ok_Click"/>
+            <Button Content="取消" Width="72" IsCancel="True" Click="Cancel_Click"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

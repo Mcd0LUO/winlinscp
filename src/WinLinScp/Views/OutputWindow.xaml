@@ -1,0 +1,14 @@
+<Window x:Class="WinLinScp.Views.OutputWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="输出" Height="360" Width="640"
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
+    <DockPanel>
+        <DockPanel DockPanel.Dock="Bottom" Margin="8">
+            <Button Content="关闭" Width="80" HorizontalAlignment="Right" IsDefault="True" Click="Close_Click"/>
+        </DockPanel>
+        <TextBox x:Name="OutputBox" Margin="8,8,8,0" IsReadOnly="True" FontFamily="Consolas" FontSize="12"
+                 TextWrapping="NoWrap" AcceptsReturn="True"
+                 VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="White"/>
+    </DockPanel>
+</Window>
