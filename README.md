@@ -88,6 +88,10 @@ src/WinLinScp/
 
 见 [CHANGELOG.md](CHANGELOG.md)。
 
+## 许可
+
+[MIT](LICENSE) — 自由使用/修改/再分发，需保留版权与许可声明。
+
 ## 开发辅助
 
 - `tools/probe/`：无 UI 驱动完整 VM 栈的集成探针（连真实主机，验证传输/归档/会话速度）
